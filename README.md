@@ -4,6 +4,8 @@ Monochrome Hyprland setup: waybar, a boot splash and dashboard on workspace 1
 (album art, cava visualizer, btop, weather, fastfetch), rounded windows with blur,
 and a lock screen to match.
 
+![desktop](screenshots/desktop.jpg)
+
 **Needs Hyprland 0.57 or newer** (the config is `hyprland.lua`). Written for Arch.
 
     git clone <this repo> && cd dotfiles && ./install.sh
