@@ -41,7 +41,10 @@ render() {
   fi
 
   case $url in
-    http*)    curl -s -m 6 -o "$raw" "$url" && img=$raw ;;
+    http*)    # covers are cached on disk by URL, so replays work offline; slow links get a longer timeout and retries
+              c=$HOME/.cache/dash-art/$(printf '%s' "$url" | md5sum | cut -c1-16); mkdir -p "${c%/*}"
+              [ -s "$c" ] || curl -s -m 25 --retry 2 -o "$c.tmp" "$url" && [ -s "$c.tmp" ] && mv "$c.tmp" "$c"
+              [ -s "$c" ] && img=$c ;;
     file://*) img=${url#file://} ;;
   esac
 
