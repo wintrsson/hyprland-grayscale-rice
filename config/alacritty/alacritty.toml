@@ -1,0 +1,45 @@
+# font size + padding come from session.toml (a symlink): X11 scaled text by ~1.48 (DPI from the panel's physical size),
+# Wayland does not, so Hyprland gets bigger values. i3 -> session-x11.toml, Hyprland -> session-wl.toml.
+[general]
+import = ["~/.config/alacritty/session.toml"]
+
+[window]
+opacity = 0.78
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+
+[colors.primary]
+background = "#0a0a0a"
+foreground = "#d8d8d8"
+
+[colors.cursor]
+text = "#0a0a0a"
+cursor = "#f2f2f2"
+
+[colors.normal]
+black   = "#1a1a1a"
+red     = "#b0b0b0"
+green   = "#c4c4c4"
+yellow  = "#d6d6d6"
+blue    = "#8c8c8c"
+magenta = "#a0a0a0"
+cyan    = "#bcbcbc"
+white   = "#d8d8d8"
+
+[colors.bright]
+black   = "#555555"
+red     = "#cccccc"
+green   = "#dedede"
+yellow  = "#eeeeee"
+blue    = "#a8a8a8"
+magenta = "#bababa"
+cyan    = "#d2d2d2"
+white   = "#ffffff"
+
+[terminal.shell]
+program = "/usr/bin/zsh"
+
+[colors.selection]
+background = "#3a3a3a"
+text = "#ffffff"

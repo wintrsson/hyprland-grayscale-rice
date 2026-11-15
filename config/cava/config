@@ -1,0 +1,14 @@
+[general]
+bars = 0
+bar_width = 3
+bar_spacing = 2
+framerate = 60
+[color]
+gradient = 1
+gradient_color_1 = '#4a4a4a'
+gradient_color_2 = '#7a7a7a'
+gradient_color_3 = '#aaaaaa'
+gradient_color_4 = '#d0d0d0'
+gradient_color_5 = '#ffffff'
+[smoothing]
+noise_reduction = 25

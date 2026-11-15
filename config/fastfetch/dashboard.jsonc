@@ -1,0 +1,17 @@
+{
+  "logo": { "type": "none" },
+  "display": { "separator": "  ", "color": { "keys": "white", "title": "white" } },
+  "modules": [
+    { "type": "os",       "key": "os   " },
+    { "type": "kernel",   "key": "krnl " },
+    { "type": "uptime",   "key": "up   " },
+    { "type": "packages", "key": "pkgs ", "format": "{pacman} (pacman)" },
+    { "type": "wm",       "key": "wm   " },
+    { "type": "cpu",      "key": "cpu  " },
+    { "type": "gpu",      "key": "gpu  ", "detectionMethod": "pci", "format": "{name}" },
+    { "type": "memory",   "key": "mem  " },
+    { "type": "disk",     "key": "disk ", "folders": "/" },
+    { "type": "command",  "key": "batt ", "text": "/home/noahd/.config/i3/scripts/batt-line.sh" },
+    { "type": "command",  "key": "ip   ", "text": "/home/noahd/.config/i3/scripts/ip-line.sh" }
+  ]
+}

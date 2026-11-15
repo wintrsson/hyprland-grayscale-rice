@@ -1,0 +1,84 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "margin-top": 8,
+  "margin-left": 12,
+  "margin-right": 12,
+  "spacing": 10,
+  "modules-left": ["hyprland/workspaces", "custom/music", "custom/cava", "custom/prev", "custom/playpause", "custom/next"],
+  "modules-center": ["clock"],
+  "modules-right": ["cpu", "memory", "pulseaudio", "battery", "tray", "custom/chess", "custom/bluetooth", "network"],
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": { "default": "○", "active": "●", "urgent": "●" },
+    "persistent-workspaces": { "*": 3 },
+    "ignore-workspaces": ["^9$"],
+    "on-click": "activate"
+  },
+  "custom/music": {
+    "exec": "~/.config/polybar/scripts/nowplaying.sh",
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+  },
+  "custom/cava": {
+    "exec": "~/.config/polybar/scripts/cava-bar.sh",
+    "format": "{}",
+    "tooltip": false
+  },
+  "custom/prev": { "format": "󰒮", "tooltip": false, "on-click": "playerctl previous" },
+  "custom/playpause": {
+    "exec": "~/.config/i3/scripts/playpause-icon.sh",
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "playerctl play-pause"
+  },
+  "custom/next": { "format": "󰒭", "tooltip": false, "on-click": "playerctl next" },
+  "custom/chess": {
+    "exec": "~/.config/i3/scripts/chess-pawn.sh",
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "~/.config/i3/scripts/chess.sh"
+  },
+  "clock": {
+    "format": "{:%I:%M %p  ·  %a %b %d}",
+    "tooltip": false
+  },
+  "custom/bluetooth": {
+    "exec": "~/.config/polybar/scripts/bluetooth.sh",
+    "interval": 5,
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "alacritty --class bttui -e bluetui"
+  },
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤮",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    "interval": 3,
+    "tooltip": false,
+    "on-click": "alacritty --class wifitui -e nmtui"
+  },
+  "cpu": { "format": "󰻠 {usage}%", "interval": 2 },
+  "memory": { "format": "󰍛 {percentage}%", "interval": 3 },
+  "pulseaudio": {
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰝟",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip": false
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "interval": 10,
+    "tooltip": false
+  },
+  "tray": { "spacing": 8 }
+}

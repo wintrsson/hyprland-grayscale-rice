@@ -1,0 +1,17 @@
+{
+  "logo": { "type": "auto", "color": { "1": "white" }, "padding": { "top": 1, "left": 2, "right": 4 } },
+  "display": { "separator": "  ", "color": { "keys": "white", "title": "white" } },
+  "modules": [
+    "title", "separator",
+    { "type": "os", "key": "os   " },
+    { "type": "kernel", "key": "krnl " },
+    { "type": "wm", "key": "wm   " },
+    { "type": "shell", "key": "sh   " },
+    { "type": "terminal", "key": "term " },
+    { "type": "cpu", "key": "cpu  " },
+    { "type": "memory", "key": "mem  " },
+    { "type": "uptime", "key": "up   " },
+    "break",
+    { "type": "colors", "symbol": "circle" }
+  ]
+}
