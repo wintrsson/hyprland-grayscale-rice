@@ -5,6 +5,17 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 
 local mod  = "SUPER"
 local term = "env GTK_THEME=Breeze:dark QT_QPA_PLATFORMTHEME=kde alacritty"
+-- window opacity (set with Super+O; saved in ~/.config/hypr/opacity.conf as windows= / inactive= between 0.3 and 1.0)
+local function read_opacity()
+    local o = { windows = 1.0, inactive = 1.0 }
+    local f = io.open((os.getenv("HOME") or "") .. "/.config/hypr/opacity.conf")
+    if f then
+        for k, v in f:read("*a"):gmatch("(%w+)=([%d%.]+)") do o[k] = tonumber(v) or o[k] end
+        f:close()
+    end
+    return o
+end
+local op = read_opacity()
 local ds   = "~/.config/i3/scripts/"
 
 -- alacritty font/padding for Wayland (X11 scaled text by ~1.48; see ~/.config/alacritty/alacritty.toml)
@@ -37,8 +48,8 @@ hl.config({
     },
     decoration = {
         rounding = 12,
-        active_opacity = 1.0,
-        inactive_opacity = 1.0,
+        active_opacity = op.windows,
+        inactive_opacity = op.inactive,
         blur = { enabled = true, size = 8, passes = 3, noise = 0.0, contrast = 0.9, brightness = 0.8 },
         shadow = { enabled = true, range = 22, render_power = 3, color = 0x8c000000, offset = "-14 -12" },
     },
@@ -86,6 +97,9 @@ hl.window_rule({ name = "wallpaperpicker", match = { class = "^wallpaperpicker$"
 hl.window_rule({ name = "audiotui", match = { class = "^audiotui$" }, float = true, size = "900 440", center = true })
 hl.window_rule({ name = "spotify", match = { class = "^(Spotify|spotify)$" }, workspace = "9 silent" })
 hl.window_rule({ name = "cavaterm", match = { class = "^cavaterm$" }, float = true, pin = true, size = "720 200" })
+-- terminals/dashboard get their see-through look from alacritty's own opacity; the opacity popups stay readable
+hl.window_rule({ name = "own-opacity", match = { class = "^(Alacritty|dropterm|dash-.*|bttui|wifitui|audiotui|cheatsheet|spotui|bootsplash|cavaterm|opacitypicker|wallpaperpicker)$" }, opacity = "1.0 override 1.0 override" })
+hl.window_rule({ name = "opacitypicker", match = { class = "^opacitypicker$" }, float = true, size = "700 530", center = true })
 hl.window_rule({ name = "video-opaque", match = { class = "^(mpv|Jellyfin Media Player)$" }, opaque = true })
 hl.window_rule({ name = "suppress-maximize", match = { class = ".*" }, suppress_event = "maximize" })
 
@@ -196,6 +210,7 @@ hl.bind(mod .. " + N", hl.dsp.exec_cmd(ds .. "toggle-tui.sh wifitui " .. ds .. "
 hl.bind(mod .. " + A", hl.dsp.exec_cmd(ds .. "toggle-tui.sh audiotui " .. ds .. "audio-tui.py"))
 hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(ds .. "wallpaper.sh next"))
 hl.bind(mod .. " + CTRL + W", hl.dsp.exec_cmd(ds .. "wallpaper-picker.sh"))
+hl.bind(mod .. " + O", hl.dsp.exec_cmd(ds .. "opacity-picker.sh"))
 hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd(ds .. "dashboard.sh"))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("env BOOT_DELAY=0 " .. ds .. "boot-dashboard.sh"))
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd(ds .. "term-session.py save"))

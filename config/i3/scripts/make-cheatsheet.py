@@ -9,7 +9,7 @@ COL = 70    # width of one column
 LEFT = [
  ("Apps", [
   ("Super+Enter", "terminal"), ("Super+D", "app launcher"), ("Super+P", "switch between open windows"),
-  ("Super+`", "drop-down terminal"), ("Super+M", "Spotify player"), ("Super+B", "Bluetooth manager"), ("Super+N", "Wi-Fi manager"), ("Super+A", "Audio: volume and devices"), ("Super+Shift+W", "next wallpaper"), ("Super+Ctrl+W", "wallpaper chooser"),
+  ("Super+`", "drop-down terminal"), ("Super+M", "Spotify player"), ("Super+B", "Bluetooth manager"), ("Super+N", "Wi-Fi manager"), ("Super+A", "Audio: volume and devices"), ("Super+Shift+W", "next wallpaper"), ("Super+Ctrl+W", "wallpaper chooser"), ("Super+O", "window opacity sliders"),
   ("Super+C", "small floating visualizer"), ("Super+Shift+A", "connect / disconnect AirPods"), ("Super+F1", "this page")]),
  ("Windows", [
   ("Super+Shift+Q", "close window"), ("Super+F", "fullscreen"), ("Super+Shift+Space", "float / tile"),

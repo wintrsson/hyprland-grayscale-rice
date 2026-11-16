@@ -30,6 +30,7 @@ All of these are small floating terminal apps in the same grayscale look. Press 
 | `Super+B` | Bluetooth manager (`bluetui`) |
 | `Super+Ctrl+W` | Wallpaper chooser (pick the pictures, then how they change) |
 | `Super+Shift+W` | Next wallpaper |
+| `Super+O` | Window opacity sliders: terminals/dashboard see-through level, other windows, dimming of unfocused windows (live, saved) |
 | `Super+Shift+B` | Replay the boot splash and rebuild the dashboard (extra presses are ignored while it runs) |
 
 ## Wallpapers
