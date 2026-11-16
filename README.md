@@ -4,7 +4,7 @@ Monochrome Hyprland setup: waybar, a boot splash and dashboard on workspace 1
 (album art, cava visualizer, btop, weather, fastfetch), rounded windows with blur,
 and a lock screen to match.
 
-![dashboard](screenshots/dashboard.jpg)
+![dashboard](screenshots/dashboard-v2.jpg)
 
 The dashboard on workspace 1 (`Super+Shift+D` toggles it). In the screenshot some private bits are blurred (the Docker/Tailscale lists, weather city, IP and the user column).
 
