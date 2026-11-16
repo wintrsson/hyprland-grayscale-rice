@@ -9,30 +9,30 @@
   [1mSuper+B                 [0mBluetooth manager                                
   [1mSuper+N                 [0mWi-Fi manager                                    [1m[97mMusic[0m [2m──────────────────────────────────────────────────────────────[0m
   [1mSuper+A                 [0mAudio: volume and devices                        [1mMedia keys              [0mplay-pause / next / previous
-  [1mSuper+C                 [0msmall floating visualizer                        [1mSuper+Shift+P           [0mplay / pause
-  [1mSuper+Shift+A           [0mconnect / disconnect AirPods                     [1mSuper+]  /  [           [0mnext / previous track
-  [1mSuper+F1                [0mthis page                                        [1mSuper+Shift+]  /  [     [0mhold to fast-forward / rewind
-                                                                           [1mShift+Next/Prev keys    [0msame: hold to seek
-  [1m[97mWindows[0m [2m────────────────────────────────────────────────────────────[0m     [1mTop bar: track title    [0mclick play-pause, right-click next
-  [1mSuper+Shift+Q           [0mclose window                                     
-  [1mSuper+F                 [0mfullscreen                                       [1m[97mScreenshots[0m [2m────────────────────────────────────────────────────────[0m
-  [1mSuper+Shift+Space       [0mfloat / tile                                     [1mPrint                   [0msave to ~/Pictures/Screenshots
-  [1mSuper+Space             [0mcycle focus                                      [1mShift+Print             [0mselect a region, copy it
-  [1mSuper+J K L ;           [0mfocus left/down/up/right (arrows too)            
-  [1mSuper+Shift+J K L ;     [0mmove window (arrows too)                         [1m[97mTop bar[0m [2m────────────────────────────────────────────────────────────[0m
-  [1mSuper+Ctrl+J K L ;      [0mresize window (arrows too)                       [1mPawn                    [0mopen / focus chess.com (new workspace)
-  [1mSuper+left-drag         [0mmove with the mouse                              [1mBluetooth               [0mclick: Bluetooth manager
-  [1mSuper+right-drag        [0mresize with the mouse                            
-  [1mSuper+H / V             [0mnext window goes right / below                   [1m[97mSystem[0m [2m─────────────────────────────────────────────────────────────[0m
-  [1mSuper+E                 [0mflip the split direction                         [1mSuper+Shift+X           [0mpower menu: L lock  E exit  S sleep  R reboot  P off
-  [1mSuper+S or W            [0mgroup windows as tabs                            [1mSuper+Shift+C           [0mreload the Hyprland config
-  [1mSuper+Z / X             [0mhide window / bring it back                      [1mVolume / brightness     [0mkeys as labelled
+  [1mSuper+Shift+W           [0mnext wallpaper                                   [1mSuper+Shift+P           [0mplay / pause
+  [1mSuper+Ctrl+W            [0mwallpaper chooser                                [1mSuper+]  /  [           [0mnext / previous track
+  [1mSuper+C                 [0msmall floating visualizer                        [1mSuper+Shift+]  /  [     [0mhold to fast-forward / rewind
+  [1mSuper+Shift+A           [0mconnect / disconnect AirPods                     [1mShift+Next/Prev keys    [0msame: hold to seek
+  [1mSuper+F1                [0mthis page                                        [1mTop bar: track title    [0mclick play-pause, right-click next
                                                                            
-  [1m[97mDashboard (workspace 1)[0m [2m────────────────────────────────────────────[0m     [1m[97mWhere things live[0m [2m──────────────────────────────────────────────────[0m
-  [1mSuper+Shift+D           [0mopen / close the dashboard                       [1m~/.config/hypr/         [0mhyprland.lua (keys, look, rules), hyprlock
-  [1mSuper+Shift+B           [0mreplay the boot intro                            [1m~/.config/waybar/       [0mtop bar
-  [1mSuper+Shift+S / T       [0msave / reopen saved terminals                    [1m~/.config/i3/scripts/   [0mdashboard, intro, screenshots, ...
-  [1mSuper+Shift+I           [0mshow / hide the IP address                       [1m~/.config/alacritty/    [0mterminal font + padding
-                                                                           [1m~/.config/dunst/        [0mnotifications
-                                                                           [1m~/.config/i3/config     [0mold i3 session (pick it at login)
+  [1m[97mWindows[0m [2m────────────────────────────────────────────────────────────[0m     [1m[97mScreenshots[0m [2m────────────────────────────────────────────────────────[0m
+  [1mSuper+Shift+Q           [0mclose window                                     [1mPrint                   [0msave to ~/Pictures/Screenshots
+  [1mSuper+F                 [0mfullscreen                                       [1mShift+Print             [0mselect a region, copy it
+  [1mSuper+Shift+Space       [0mfloat / tile                                     
+  [1mSuper+Space             [0mcycle focus                                      [1m[97mTop bar[0m [2m────────────────────────────────────────────────────────────[0m
+  [1mSuper+J K L ;           [0mfocus left/down/up/right (arrows too)            [1mPawn                    [0mopen / focus chess.com (new workspace)
+  [1mSuper+Shift+J K L ;     [0mmove window (arrows too)                         [1mBluetooth               [0mclick: Bluetooth manager
+  [1mSuper+Ctrl+J K L ;      [0mresize window (arrows too)                       
+  [1mSuper+left-drag         [0mmove with the mouse                              [1m[97mSystem[0m [2m─────────────────────────────────────────────────────────────[0m
+  [1mSuper+right-drag        [0mresize with the mouse                            [1mSuper+Shift+X           [0mpower menu: L lock  E exit  S sleep  R reboot  P off
+  [1mSuper+H / V             [0mnext window goes right / below                   [1mSuper+Shift+C           [0mreload the Hyprland config
+  [1mSuper+E                 [0mflip the split direction                         [1mVolume / brightness     [0mkeys as labelled
+  [1mSuper+S or W            [0mgroup windows as tabs                            
+  [1mSuper+Z / X             [0mhide window / bring it back                      [1m[97mWhere things live[0m [2m──────────────────────────────────────────────────[0m
+                                                                           [1m~/.config/hypr/         [0mhyprland.lua (keys, look, rules), hyprlock
+  [1m[97mDashboard (workspace 1)[0m [2m────────────────────────────────────────────[0m     [1m~/.config/waybar/       [0mtop bar
+  [1mSuper+Shift+D           [0mopen / close the dashboard                       [1m~/.config/i3/scripts/   [0mdashboard, intro, screenshots, ...
+  [1mSuper+Shift+B           [0mreplay the boot intro                            [1m~/.config/alacritty/    [0mterminal font + padding
+  [1mSuper+Shift+S / T       [0msave / reopen saved terminals                    [1m~/.config/dunst/        [0mnotifications
+  [1mSuper+Shift+I           [0mshow / hide the IP address                       [1m~/.config/i3/config     [0mold i3 session (pick it at login)
                                                                            

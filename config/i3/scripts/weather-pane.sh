@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Dashboard weather pane. wttr.in is queried at most every 15 minutes (location by IP, °F/mph);
 # the pane redraws from the cached copy every minute, and immediately whenever its width changes.
+stty -echo 2>/dev/null   # keystrokes typed while this pane has focus must not be echoed into it
 CACHE=/tmp/dash-weather.json
 HERE=$(dirname "$(readlink -f "$0")")
 

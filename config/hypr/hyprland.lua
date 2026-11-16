@@ -63,6 +63,7 @@ hl.animation({ leaf = "layers",     enabled = true, speed = 3, bezier = "quick",
 -- ---------------------------------------------------------------- autostart
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")
+    hl.exec_cmd(ds .. "parallax.py")           -- wallpaper daemon: moves with the mouse, rotates, crossfades
     hl.exec_cmd("waybar")
     hl.exec_cmd("dunst")
     hl.exec_cmd("hypridle")
@@ -81,6 +82,7 @@ hl.window_rule({ name = "spotui", match = { class = "^spotui$" }, float = true, 
 hl.window_rule({ name = "cheatsheet", match = { class = "^cheatsheet$" }, float = true, size = "1560 900", center = true })
 hl.window_rule({ name = "bttui",  match = { class = "^bttui$" },  float = true, size = "900 520",  center = true })
 hl.window_rule({ name = "wifitui", match = { class = "^wifitui$" }, float = true, size = "700 520", center = true })
+hl.window_rule({ name = "wallpaperpicker", match = { class = "^wallpaperpicker$" }, float = true, size = "1180 780", center = true })
 hl.window_rule({ name = "audiotui", match = { class = "^audiotui$" }, float = true, size = "900 440", center = true })
 hl.window_rule({ name = "spotify", match = { class = "^(Spotify|spotify)$" }, workspace = "9 silent" })
 hl.window_rule({ name = "cavaterm", match = { class = "^cavaterm$" }, float = true, pin = true, size = "720 200" })
@@ -192,6 +194,8 @@ hl.bind(mod .. " + M", hl.dsp.exec_cmd(ds .. "toggle-tui.sh spotui /home/noahd/.
 hl.bind(mod .. " + B", hl.dsp.exec_cmd(ds .. "toggle-tui.sh bttui bluetui"))
 hl.bind(mod .. " + N", hl.dsp.exec_cmd(ds .. "toggle-tui.sh wifitui " .. ds .. "wifi-tui.py"))
 hl.bind(mod .. " + A", hl.dsp.exec_cmd(ds .. "toggle-tui.sh audiotui " .. ds .. "audio-tui.py"))
+hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(ds .. "wallpaper.sh next"))
+hl.bind(mod .. " + CTRL + W", hl.dsp.exec_cmd(ds .. "wallpaper-picker.sh"))
 hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd(ds .. "dashboard.sh"))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("env BOOT_DELAY=0 " .. ds .. "boot-dashboard.sh"))
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd(ds .. "term-session.py save"))

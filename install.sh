@@ -16,10 +16,18 @@ for d in "$here"/config/*/; do
   if [ -e "$HOME/.config/$name" ]; then mkdir -p "$bak"; mv "$HOME/.config/$name" "$bak/"; fi
   cp -r "$d" "$HOME/.config/$name"
 done
+# keep wallpaper settings from a previous install
+[ -f "$bak/hypr/wallpaper.json" ] && cp "$bak/hypr/wallpaper.json" "$HOME/.config/hypr/wallpaper.json"
 chmod +x "$HOME/.config/i3/scripts/"*.sh "$HOME/.config/i3/scripts/"*.py "$HOME/.config/polybar/scripts/"*.sh
 
 mkdir -p "$HOME/Pictures/Screenshots" "$HOME/.cache"
 [ -e "$HOME/Pictures/wall.jpg" ] || cp "$here/wall.jpg" "$HOME/Pictures/wall.jpg"
+
+# the black-and-white wallpaper set (downloaded from Wikimedia Commons; skip with SKIP_WALLPAPERS=1), and the default rotation list
+if [ -z "${SKIP_WALLPAPERS:-}" ]; then "$here/fetch-wallpapers.sh" || echo "Some wallpapers could not be downloaded; run ./fetch-wallpapers.sh again later."; fi
+if [ ! -f "$HOME/.config/hypr/wallpaper.json" ]; then
+  grep -v '^#' "$here/wallpapers.tsv" | cut -f1 | while read -r n; do [ -s "$HOME/Pictures/wall.$n.jpg" ] && echo "$HOME/Pictures/wall.$n.jpg"; done > "$HOME/.config/hypr/wallpaper-list"
+fi
 
 # configs that can't expand $HOME: point the hard-coded /home/noahd paths at this user
 grep -rIl "/home/noahd" "$HOME/.config" 2>/dev/null | xargs -r sed -i "s#/home/noahd#$HOME#g"
@@ -28,5 +36,5 @@ grep -rIl "/home/noahd" "$HOME/.config" 2>/dev/null | xargs -r sed -i "s#/home/n
 magick "$HOME/Pictures/wall.jpg" -resize 1920x1080^ -gravity center -extent 1920x1080 -blur 0x12 \
   -colorspace Gray -fill '#0a0a0a' -colorize 45% -colorspace sRGB "$HOME/.cache/lock-blur.png" || true
 
-echo "Done. Log out and pick Hyprland (needs 0.57+, the config is Lua). Press Super+F1 for the keybind cheatsheet."
+echo "Done. Log out and pick Hyprland (needs 0.57+, the config is Lua). Press Super+F1 for the keybind cheatsheet, Super+Ctrl+W for the wallpaper chooser."
 [ -d "$bak" ] && echo "Your old configs are in $bak"

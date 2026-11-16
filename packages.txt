@@ -25,3 +25,8 @@ pipewire-pulse
 python
 python-numpy
 ttf-jetbrains-mono-nerd
+python-gobject
+gtk3
+gtk-layer-shell
+python-cairo
+pyside6

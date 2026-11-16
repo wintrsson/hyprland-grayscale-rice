@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Dashboard "services" pane: Docker containers + Tailscale devices. Refreshes every 10 seconds.
 # Shows names and up/down status only. Running items first, stopped ones dimmed at the bottom.
+stty -echo 2>/dev/null   # keystrokes typed while this pane has focus must not be echoed into it
 B=$'\033[1m'; D=$'\033[2m'; R=$'\033[0m'; W=$'\033[97m'
 
 cols() { local c; c=$(stty size </dev/tty 2>/dev/null | awk '{print $2}'); echo "${c:-30}"; }

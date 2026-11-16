@@ -34,7 +34,7 @@ else
 fi
 
 ~/.config/i3/scripts/art-image.sh &
-alacritty --class dash-fetch -o font.size=$fs -e sh -c 'while :; do printf "\033[H\033[J\033[?25l"; out=$(fastfetch -c ~/.config/fastfetch/dashboard.jsonc --pipe false); printf "%s" "$out"; sleep 20; done' &
+alacritty --class dash-fetch -o font.size=$fs -e sh -c 'stty -echo; while :; do printf "\033[H\033[J\033[?25l"; out=$(fastfetch -c ~/.config/fastfetch/dashboard.jsonc --pipe false); printf "%s" "$out"; sleep 20; done' &
 alacritty --class dash-cava -e python3 -I ~/.config/i3/scripts/viz.py tui &
 alacritty --class dash-btop -o font.size=$fs -e btop &
 alacritty --class dash-svc -o font.size=$fs -e ~/.config/i3/scripts/svc-pane.sh &
