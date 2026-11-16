@@ -9,7 +9,7 @@ COL = 70    # width of one column
 LEFT = [
  ("Apps", [
   ("Super+Enter", "terminal"), ("Super+D", "app launcher"), ("Super+P", "switch between open windows"),
-  ("Super+`", "drop-down terminal"), ("Super+M", "Spotify player"), ("Super+B", "Bluetooth manager"), ("Super+N", "Wi-Fi manager"),
+  ("Super+`", "drop-down terminal"), ("Super+M", "Spotify player"), ("Super+B", "Bluetooth manager"), ("Super+N", "Wi-Fi manager"), ("Super+A", "Audio: volume and devices"),
   ("Super+C", "small floating visualizer"), ("Super+Shift+A", "connect / disconnect AirPods"), ("Super+F1", "this page")]),
  ("Windows", [
   ("Super+Shift+Q", "close window"), ("Super+F", "fullscreen"), ("Super+Shift+Space", "float / tile"),
@@ -31,8 +31,7 @@ RIGHT = [
   ("Super+Shift+]  /  [", "hold to fast-forward / rewind"), ("Shift+Next/Prev keys", "same: hold to seek"),
   ("Top bar: track title", "click play-pause, right-click next")]),
  ("Screenshots", [
-  ("Print", "save to ~/Pictures/Screenshots"), ("Shift+Print", "select a region, copy it"),
-  ("Super+Print", "send to your phone (hold image > Add to Photos)")]),
+  ("Print", "save to ~/Pictures/Screenshots"), ("Shift+Print", "select a region, copy it")]),
  ("Top bar", [("Pawn", "open / focus chess.com (new workspace)"), ("Bluetooth", "click: Bluetooth manager")]),
  ("System", [
   ("Super+Shift+X", "power menu: L lock  E exit  S sleep  R reboot  P off"), ("Super+Shift+C", "reload the Hyprland config"),

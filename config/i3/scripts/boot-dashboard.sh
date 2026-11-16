@@ -8,6 +8,15 @@
 FLAG=~/.config/i3/no-boot-anim
 HERE=~/.config/i3/scripts
 
+# Only one boot sequence at a time: while it is running (splash + dashboard build), extra key presses are ignored.
+# (A lock directory with the owner's pid; a lock left by a crashed run is detected and replaced.)
+LOCK=/tmp/boot-dashboard.lock
+if ! mkdir "$LOCK" 2>/dev/null; then
+  if kill -0 "$(cat "$LOCK/pid" 2>/dev/null)" 2>/dev/null; then exit 0; fi
+  rm -rf "$LOCK"; mkdir "$LOCK" 2>/dev/null || exit 0
+fi
+echo $$ > "$LOCK/pid"
+
 # Hold notifications until the boot sequence is over (dunst queues them and shows them afterwards).
 hold_notifs() { for _ in $(seq 20); do dunstctl set-paused true 2>/dev/null && return; sleep 0.25; done; }
 hypr=${HYPRLAND_INSTANCE_SIGNATURE:+1}
@@ -21,7 +30,7 @@ wm_ws1()   { if [ -n "$hypr" ]; then hyprctl dispatch 'hl.dsp.focus({ workspace 
 wm_splash_focus() { if [ -n "$hypr" ]; then hyprctl dispatch 'hl.dsp.focus({ window = "class:^bootsplash$" })' >/dev/null 2>&1; else i3-msg '[class="^bootsplash$"] focus' >/dev/null 2>&1; fi; }
 dash_open() { if [ -n "$hypr" ]; then hyprctl clients -j | grep -q '"class": "dash-'; else i3-msg -t get_tree | grep -q '"class":"dash-'; fi; }
 release_notifs() { dunstctl set-paused false 2>/dev/null; bar_show; }
-trap release_notifs EXIT
+trap 'release_notifs; rm -rf "$LOCK"' EXIT
 hold_notifs
 bar_hide   # bar + tray also stay out of the way until the splash is done
 

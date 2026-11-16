@@ -18,6 +18,22 @@ The dashboard on workspace 1 (`Super+Shift+D` toggles it). In the screenshot som
 | **Services** (top right) | Docker containers and Tailscale devices; shows `n/a` if you don't run them. |
 | **Weather** (bottom right) | Current weather and a 3-day forecast from wttr.in, located by IP. |
 
+## Pop-ups
+
+All of these are small floating terminal apps in the same grayscale look. Press the key again to close them.
+
+| Key | What it opens |
+|---|---|
+| `Super+F1` | Cheatsheet with every keybind (`q`, `Esc`, `Enter` or `Space` closes it) |
+| `Super+N` | Wi-Fi manager: pick a network, connect, forget, join a hidden one (also: click the Wi-Fi icon in the bar) |
+| `Super+A` | Audio: choose the output / input device and set its volume (also: click the volume in the bar; right-click mutes) |
+| `Super+B` | Bluetooth manager (`bluetui`) |
+| `Super+Shift+B` | Replay the boot splash and rebuild the dashboard (extra presses are ignored while it runs) |
+
+Other details: the cursor hides after 1 s of inactivity; the album-art pane downloads covers in the background and
+shows a "loading cover..." placeholder (covers are cached in `~/.cache/dash-art/`); Hyprland's log is kept in
+`~/.cache/hyprland-last.log` so a crash right after resume can be diagnosed after a reboot.
+
 Plain desktop without the dashboard:
 
 ![desktop](screenshots/desktop.jpg)

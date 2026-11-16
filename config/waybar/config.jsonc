@@ -63,14 +63,15 @@
     "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
     "interval": 3,
     "tooltip": false,
-    "on-click": "alacritty --class wifitui -e nmtui"
+    "on-click": "~/.config/i3/scripts/toggle-tui.sh wifitui ~/.config/i3/scripts/wifi-tui.py"
   },
   "cpu": { "format": "󰻠 {usage}%", "interval": 2 },
   "memory": { "format": "󰍛 {percentage}%", "interval": 3 },
   "pulseaudio": {
     "format": "󰕾 {volume}%",
     "format-muted": "󰝟",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click": "~/.config/i3/scripts/toggle-tui.sh audiotui ~/.config/i3/scripts/audio-tui.py",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "tooltip": false
   },
   "battery": {

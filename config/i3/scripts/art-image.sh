@@ -2,6 +2,9 @@
 # Dashboard album art as a real image window: grayscale cover with smooth rounded corners,
 # plus title / artist / album underneath. The image is rendered at the window's exact size
 # (and re-rendered when the window is resized or the track changes), so no zooming is involved.
+# only one copy may run: stray copies all redraw the same picture and make the cover lag behind the song
+exec 9>/tmp/dash-art.lock; flock -n 9 || exit 0
+main=$$
 out=/tmp/dash-art-view.png
 raw=/tmp/dash-art-raw.img
 mask=/tmp/dash-art-mask.png
@@ -26,6 +29,7 @@ winsize() {
 }
 
 render() {
+  missing=
   local W H url title artist album img="" m S X Y R t1 t2 t3 need y1 y2 y3
   read -r W H < <(winsize)
   [ "$W" -lt 160 ] && W=160
@@ -41,10 +45,29 @@ render() {
   fi
 
   case $url in
-    http*)    # covers are cached on disk by URL, so replays work offline; slow links get a longer timeout and retries
+    http*)    # Covers are cached on disk by URL. On a slow link the full 640px cover can take a minute, so a small 300px
+              # version (Spotify serves the same image at several sizes) is fetched first and shown at once; the full one
+              # replaces it when it arrives. Everything downloads in the background so the title never waits.
               c=$HOME/.cache/dash-art/$(printf '%s' "$url" | md5sum | cut -c1-16); mkdir -p "${c%/*}"
-              [ -s "$c" ] || curl -s -m 25 --retry 2 -o "$c.tmp" "$url" && [ -s "$c.tmp" ] && mv "$c.tmp" "$c"
-              [ -s "$c" ] && img=$c ;;
+              if [ -s "$c" ]; then img=$c; missing=
+              else
+                [ -s "$c.small" ] && img=$c.small
+                missing=1
+                # one background fetch at a time (a stale marker older than 2 min is ignored)
+                if [ ! -e "$c.fetching" ] || [ -n "$(find "$c.fetching" -mmin +2 2>/dev/null)" ]; then
+                  # a new track cancels the previous download (on a slow link they would only slow each other down)
+                  pidf=$HOME/.cache/dash-art/fetch.pid
+                  if read -r oldpid oldmark < "$pidf" 2>/dev/null; then pkill -P "$oldpid" 2>/dev/null; kill "$oldpid" 2>/dev/null; rm -f "$oldmark"; fi
+                  : > "$c.fetching"
+                  small=${url/ab67616d0000b273/ab67616d00001e02}
+                  ( echo "$BASHPID $c.fetching" > "$pidf"
+                    if [ "$small" != "$url" ] && [ ! -s "$c.small" ]; then
+                      t=$c.stmp.$$; curl -s -m 20 --retry 2 -o "$t" "$small" && identify "$t" >/dev/null 2>&1 && mv "$t" "$c.small" && touch /tmp/dash-art-dirty; rm -f "$t"
+                    fi
+                    t=$c.tmp.$$; curl -s -m 60 --retry 2 -o "$t" "$url" && identify "$t" >/dev/null 2>&1 && mv "$t" "$c" && touch /tmp/dash-art-dirty
+                    rm -f "$t" "$c.fetching" ) 9>&- >/dev/null 2>&1 &
+                fi
+              fi ;;
     file://*) img=${url#file://} ;;
   esac
 
@@ -61,6 +84,12 @@ render() {
 
   magick -size ${W}x${H} "xc:$BG" "$out.base.png"
 
+  if [ -z "$img" ]; then   # no cover yet (still downloading): a dark placeholder with centered text instead of an empty hole
+    magick -size ${S}x${S} xc:none -fill '#242424' -draw "roundrectangle 0,0 $((S - 1)),$((S - 1)) $R,$R" \
+      -gravity center -font "$FONT" -pointsize 18 -fill '#5a5a5a' -annotate +0+0 'loading cover…' "$out.ph.png" &&
+      magick "$out.base.png" "$out.ph.png" -geometry +$X+$Y -compose over -composite "$out.base.png"
+    rm -f "$out.ph.png"
+  fi
   if [ -n "$img" ]; then
     magick -size ${S}x${S} xc:black -fill white -draw "roundrectangle 0,0 $((S - 1)),$((S - 1)) $R,$R" "$mask"
     magick "$img" -colorspace Gray -resize ${S}x${S}^ -gravity center -extent ${S}x${S} \
@@ -134,18 +163,20 @@ glitch() {
 
 ( while :; do
     sleep 0.1
+    kill -0 "$main" 2>/dev/null || exit 0
     if [ -e /tmp/dash-art-glitch ]; then rm -f /tmp/dash-art-glitch; glitch; continue; fi
     # a track change (flagged instantly by the follower below) re-renders within 0.1 s; otherwise check every second
     if [ -e /tmp/dash-art-dirty ]; then rm -f /tmp/dash-art-dirty; changed; render; n=0; continue; fi
     # for the first 6 s after start, follow the window size closely (it gets resized right after it opens)
     [ "$n" -lt 60 ] && changed && render
-    n=$((n + 1)); [ $((n % 10)) -eq 0 ] && { if changed; then render; else bar; fi; }
-  done ) &
+    n=$((n + 1)); [ -n "$missing" ] && [ $((n % 150)) -eq 0 ] && touch /tmp/dash-art-dirty
+    [ $((n % 10)) -eq 0 ] && { if changed; then render; else bar; fi; }
+  done ) 9>&- &
 updater=$!
 # follower: playerctl reports metadata changes the moment the player publishes them
-( playerctl --follow metadata --format '{{mpris:artUrl}}|{{title}}|{{artist}}' 2>/dev/null | while IFS= read -r _; do touch /tmp/dash-art-dirty; done ) &
+( playerctl --follow metadata --format '{{mpris:artUrl}}|{{title}}|{{artist}}' 2>/dev/null | while IFS= read -r _; do touch /tmp/dash-art-dirty; done ) 9>&- &
 follower=$!
-trap 'kill "$updater" "$follower" 2>/dev/null' EXIT
+trap 'pkill -P "$follower" 2>/dev/null; kill "$updater" "$follower" 2>/dev/null' EXIT TERM INT HUP
 
 # the window itself (foreground); closing it ends the script and the updater
-feh --scale-down -B black --class dash-art -R 0.08 "$out"
+feh --scale-down -B black --class dash-art -R 0.08 "$out" 9>&-

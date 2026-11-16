@@ -51,7 +51,7 @@ hl.config({
     },
     binds = { workspace_back_and_forth = true },   -- i3 workspace_auto_back_and_forth
     input = { follow_mouse = 0, touchpad = { natural_scroll = false } },
-    cursor = { inactive_timeout = 2, no_warps = true },             -- hide the cursor after 2 s (unclutter)
+    cursor = { inactive_timeout = 1, no_warps = true },             -- hide the cursor after 1 s
 })
 
 hl.curve("quick", { type = "bezier", points = { {0.15, 0}, {0.1, 1} } })
@@ -70,6 +70,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("alacritty --class dropterm", { workspace = "special:dropterm silent" })
     hl.exec_cmd("spotify-launcher", { workspace = "9 silent" })
     hl.exec_cmd(ds .. "overflow-hypr.py")      -- new windows on workspace 1 get their own workspace
+    hl.exec_cmd(ds .. "keep-hypr-log.sh")      -- keeps the last lines of the Hyprland log across reboots (crash diagnosis)
     hl.exec_cmd(ds .. "boot-dashboard.sh")     -- boot splash + dashboard + terminal restore
 end)
 
@@ -80,6 +81,7 @@ hl.window_rule({ name = "spotui", match = { class = "^spotui$" }, float = true, 
 hl.window_rule({ name = "cheatsheet", match = { class = "^cheatsheet$" }, float = true, size = "1560 900", center = true })
 hl.window_rule({ name = "bttui",  match = { class = "^bttui$" },  float = true, size = "900 520",  center = true })
 hl.window_rule({ name = "wifitui", match = { class = "^wifitui$" }, float = true, size = "700 520", center = true })
+hl.window_rule({ name = "audiotui", match = { class = "^audiotui$" }, float = true, size = "900 440", center = true })
 hl.window_rule({ name = "spotify", match = { class = "^(Spotify|spotify)$" }, workspace = "9 silent" })
 hl.window_rule({ name = "cavaterm", match = { class = "^cavaterm$" }, float = true, pin = true, size = "720 200" })
 hl.window_rule({ name = "video-opaque", match = { class = "^(mpv|Jellyfin Media Player)$" }, opaque = true })
@@ -188,7 +190,8 @@ hl.bind(mod .. " + SHIFT + A", hl.dsp.exec_cmd(ds .. "airpods.sh"))
 hl.bind(mod .. " + SHIFT + I", hl.dsp.exec_cmd(ds .. "show-ip.sh"))
 hl.bind(mod .. " + M", hl.dsp.exec_cmd(ds .. "toggle-tui.sh spotui /home/noahd/.local/bin/spotify_player"))
 hl.bind(mod .. " + B", hl.dsp.exec_cmd(ds .. "toggle-tui.sh bttui bluetui"))
-hl.bind(mod .. " + N", hl.dsp.exec_cmd(ds .. "toggle-tui.sh wifitui nmtui"))
+hl.bind(mod .. " + N", hl.dsp.exec_cmd(ds .. "toggle-tui.sh wifitui " .. ds .. "wifi-tui.py"))
+hl.bind(mod .. " + A", hl.dsp.exec_cmd(ds .. "toggle-tui.sh audiotui " .. ds .. "audio-tui.py"))
 hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd(ds .. "dashboard.sh"))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("env BOOT_DELAY=0 " .. ds .. "boot-dashboard.sh"))
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd(ds .. "term-session.py save"))
