@@ -77,8 +77,9 @@
   "battery": {
     "format": "{icon} {capacity}%",
     "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
     "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
-    "interval": 10,
+    "interval": 2,
     "tooltip": false
   },
   "tray": { "spacing": 8 }

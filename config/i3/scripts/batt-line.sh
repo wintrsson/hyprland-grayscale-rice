@@ -10,4 +10,12 @@ case $st in
   Charging)    [ "${p:-0}" -gt 0 ] && mins=$(( (full - now) * 60 / p )) ;;
 esac
 t=""; [ -n "$mins" ] && t=$(printf '  %dh%02dm' $((mins / 60)) $((mins % 60)))
-echo "${cap}%  ${st,,}${t}"
+# Plugged in but the battery is parked at its charge limit (e.g. Dell "charge until 90%"): the kernel calls that
+# "Not charging", which reads like a fault. Say what is really going on.
+ac=""; for a in /sys/class/power_supply/AC /sys/class/power_supply/ADP1 /sys/class/power_supply/ACAD; do [ -r "$a/online" ] && ac=$(<"$a/online") && break; done
+if [ "$st" = "Not charging" ] && [ "$ac" = "1" ]; then
+  lim=""; [ -r "$b/charge_control_end_threshold" ] && lim="  (limit $(<"$b/charge_control_end_threshold")%)"
+  echo "${cap}%  plugged in${lim}"
+else
+  echo "${cap}%  ${st,,}${t}"
+fi
